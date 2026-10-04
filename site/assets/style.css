@@ -1581,3 +1581,23 @@ html{scroll-padding-top:78px}
   font:600 14px/1.4 var(--body);
   letter-spacing:0;
 }
+
+/* tag di Experience memakai font yang sama dengan teks lain */
+.xp-tags span{
+  font:600 13px var(--body);
+  letter-spacing:0;
+}
+
+.ic {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.ic i {
+  line-height: 1;
+}
