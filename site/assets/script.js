@@ -60,16 +60,41 @@ filterBtns.forEach(btn => {
 });
 
 // Contact form -> mailto fallback
-const contactForm = document.getElementById('contactForm');
-contactForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const name = document.getElementById('name').value;
-  const email = document.getElementById('email').value;
-  const message = document.getElementById('message').value;
-  const subject = encodeURIComponent(`Portfolio inquiry from ${name}`);
-  const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
-  window.location.href = `mailto:luthfiadiyah@gmail.com?subject=${subject}&body=${body}`;
-});
+(function () {
+  const form   = document.getElementById('contactForm');
+  const btn    = document.getElementById('formBtn');
+  const status = document.getElementById('formStatus');
+  if (!form) return;
+ 
+  const show = (msg, type) => {
+    status.textContent = msg;
+    status.className = 'form-status ' + (type || '');
+  };
+ 
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const label = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    show('', '');
+ 
+    try {
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(new FormData(form)).toString(),
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      form.reset();
+      show('Thank you! Your message has been sent. I\'ll get back to you soon.', 'ok');
+    } catch (err) {
+      show('Sorry, something went wrong. Please email me directly at luthfiadiyah@gmail.com.', 'err');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = label;
+    }
+  });
+})();
 
 /* ===== Badge pendulum: drag, lepas, memantul balik ===== */
 (function () {
@@ -424,7 +449,7 @@ contactForm.addEventListener('submit', (e) => {
     'Tableau':         ['local', 'assets/img/logos/tableau.png'],
     'Crystal Reports': ['sap', '0FAAFF'],
     'Figma':           ['figma', 'F24E1E'],
-    'Canva':           ['local', 'assets/img/logos/canva.png'],
+    //'Canva':           ['local', 'assets/img/logos/canva.png'],//
     'Maze':            ['local', 'assets/img/logos/maze.png'],
     'StarUML':         ['local', 'assets/img/logos/staruml.png'],
     'GitHub':          ['github', '181717'],
