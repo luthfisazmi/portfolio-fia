@@ -31,8 +31,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link rel="stylesheet" href="assets/style.css">
+<script>
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('intro-enabled');
+  }
+</script>
 </head>
 <body>
+
+<div class="intro-screen" id="introScreen" role="status" aria-live="polite">
+  <div class="intro-content">
+    <p class="intro-eyebrow">Welcome to</p>
+    <p class="intro-name">Luthfi<span>.</span></p>
+    <p class="intro-caption">Portfolio <span>·</span> 2026</p>
+    <div class="intro-progress" aria-hidden="true"><i></i></div>
+  </div>
+  <button class="intro-skip" id="introSkip" type="button">Skip intro</button>
+</div>
 
 <nav class="nav">
   <div class="wrap">
@@ -65,7 +80,10 @@
     <div class="hero-copy">
 
       <p class="hi">Hello, I'm</p>
-      <h1>Luthfi Azmi<span class="name">Sa'diyah</span></h1>
+      <h1 class="typing-name" aria-label="Luthfi Azmi Sa'diyah">
+        <span class="typing-line" data-text="Luthfi Azmi" aria-hidden="true"></span>
+        <span class="name typing-line" data-text="Sa'diyah" aria-hidden="true"></span>
+      </h1>
 
       <div class="role-row">
         <span class="role-chip">Information Systems Graduate</span>
@@ -92,9 +110,9 @@
           <div class="stat-bar"><i></i></div>
         </div>
 
-        <div class="stat-card" style="--c:#3A6FD8" data-to="4" data-suffix="+" data-fill="100"
+        <div class="stat-card" style="--c:#3A6FD8" data-to="9" data-suffix="+" data-fill="100"
              data-jokes="All shipped, none on fire.|Works on my machine. And yours.|Tests passed. Mostly vibes.|Each one has a README. Almost.">
-          <div class="num">4+</div>
+          <div class="num">9+</div>
           <div class="label">Major Projects</div>
           <div class="stat-bar"><i></i></div>
         </div>
@@ -134,8 +152,8 @@
  
     <div class="am-left">
       <p class="section-tag">// about me</p>
-      <h2>hello, i'm <span class="am-mark">fia</span></h2>
-      <p class="am-lead">I’m a Information Systems graduate who likes turning ideas into things that actually work. My experience comes from internships and projects — basically, building, debugging, and learning one problem at a time.</p>
+      <h2>call me, <span class="am-mark">fia</span></h2>
+      <p class="am-lead">I’m an Information Systems graduate and my experience comes from internships and projects — basically, building, debugging, and learning one problem at a time.</p>
  
       <div class="am-icons">
         <span><svg viewBox="0 0 24 24"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"/></svg>Web</span>
@@ -259,7 +277,7 @@
         <h3>Back-End Developer (Internship)</h3>
         <div class="xp-co">Dinas Komunikasi dan Informatika Provinsi Jawa Timur</div>
         <p class="xp-desc">Refactored SIMA, the internship management system, from Laravel 5 to Laravel 12 with improved validation, access control, UI, and database design.</p>
-        <div class="xp-tags"><span>Laravel</span><span>MySQL</span><span>Access Control</span><span>Database Design</span></div>
+        <div class="xp-tags"><span>Laravel</span><span>MySQL</span><span>Git</span><span>Database Design</span></div>
       </article>
  
       <article class="xp-item">
@@ -310,23 +328,36 @@
     <div class="section-head">
       <p class="section-tag">// projects &amp; case studies</p>
       <h2>things i've built</h2>
-      <p>A mix of web/desktop development, data analytics, and UI/UX case studies from internships, competitions, and coursework.</p>
+      <p>A mix of web development, UI/UX case studies, and data analytics from internships, competitions, and coursework.</p>
     </div>
 
     <div class="proj-grid">
+      <div class="proj-card">
+        <div class="proj-thumb">
+          <img src="assets/img/proj-perpamsi.png" alt="e-Jawara Perpamsi electronic correspondence web application">
+          <span class="proj-status"><i></i>On Going</span>
+        </div>
+        <div class="proj-body">
+          <h3>e-Jawara Perpamsi</h3>
+          <p class="proj-sub">Software Engineer Project</p>
+          <p>Electronic correspondence (e-Jawara) web application for PERPAMSI JATIM, developed as part of my work as a Software Engineer.</p>
+          <div class="proj-tags"><span>Laravel</span><span>MySQL</span><span>Git</span><span>Web App</span></div>
+          <a class="proj-link" href="https://ejawara.perpamsi-jatim.org/" target="_blank" rel="noopener" aria-label="View e-Jawara Perpamsi project">View Project <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+        </div>
+      </div>
       <div class="proj-card">
         <div class="proj-thumb">
           <img src="assets/img/proj-esurat.jpg" alt="e-Surat Tirta Kencana correspondence system">
           <span class="proj-status"><i></i>On Going</span>
         </div>
         <div class="proj-body">
-          <h3>e-Surat Tirta Kencana</h3>
+          <h3>Tirta Kencana e-Surat</h3>
           <p class="proj-sub">Software Engineer Project</p>
           <!-- sesuaikan deskripsi & tag dengan yang kamu kerjakan -->
-          <p>Electronic correspondence (e-Surat) system for Perumdam Tirta Kencana, currently under active development as part of my role as Software Engineer.</p>
-          <div class="proj-tags"><span>Laravel</span><span>MySQL</span><span>Web App</span></div>
+          <p>Electronic correspondence (e-Surat) system for Perumdam Tirta Kencana, developed as part of my work as a Software Engineer.</p>
+          <div class="proj-tags"><span>Laravel</span><span>MySQL</span><span>Git</span><span>Web App</span></div>
           <!-- isi href jika ada link publik; "#" = tombol disembunyikan -->
-          <a class="proj-link" href="#" target="_blank" rel="noopener" aria-label="View e-Surat Tirta Kencana project">View Project <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+          <a class="proj-link" href="https://edoc.perumdamjombang.co.id/" target="_blank" rel="noopener" aria-label="View e-Surat Tirta Kencana project">View Project <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
         </div>
       </div>
       <div class="proj-card">
@@ -337,7 +368,7 @@
           <p>Refactored the internship management system at Dinas Kominfo Jawa Timur, upgrading Laravel 5 to Laravel 12 with improved validation, access control, UI, and database design.</p>
           <div class="proj-tags"><span>Laravel</span><span>MySQL</span><span>Web App</span></div>
           <!-- GitHub -->
-          <a class="proj-link" href="https://github.com/luthfisazmi/sima.laravel.git" target="_blank" rel="noopener" aria-label="View SIMA project">View Project <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+          <a class="proj-link" href="https://sima.kominfo.jatimprov.go.id/" target="_blank" rel="noopener" aria-label="View SIMA project">View Project <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
         </div>
       </div>
 

@@ -13,6 +13,84 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+/* ---------- INTRO: short welcome screen ---------- */
+(function () {
+  const screen = $('#introScreen');
+  if (!screen) return;
+  if (reduce) { screen.remove(); return; }
+
+  const finish = () => {
+    clearTimeout(timer);
+    document.documentElement.classList.remove('intro-enabled');
+    document.documentElement.classList.add('intro-finished');
+    screen.setAttribute('aria-hidden', 'true');
+    document.dispatchEvent(new Event('portfolio:intro-finished'));
+    setTimeout(() => screen.remove(), 500);
+  };
+  const timer = setTimeout(finish, 1800);
+  $('#introSkip')?.addEventListener('click', finish, { once: true });
+})();
+
+/* ---------- HERO: type the name one character at a time ---------- */
+(function () {
+  const lines = $$('.typing-name .typing-line');
+  if (!lines.length) return;
+
+  const typeName = () => {
+    if (reduce) {
+      lines.forEach((line) => { line.textContent = line.dataset.text || ''; });
+      return;
+    }
+
+    let lineIndex = 0, charIndex = 0;
+    const typeNext = () => {
+      const line = lines[lineIndex];
+      const chars = Array.from(line.dataset.text || '');
+      line.classList.add('is-typing');
+      line.textContent = chars.slice(0, ++charIndex).join('');
+
+      if (charIndex >= chars.length) {
+        line.classList.remove('is-typing');
+        lineIndex++;
+        charIndex = 0;
+        if (lineIndex >= lines.length) return;
+      }
+      setTimeout(typeNext, 75);
+    };
+    typeNext();
+  };
+
+  if ($('#introScreen') && !reduce) {
+    document.addEventListener('portfolio:intro-finished', typeName, { once: true });
+  } else {
+    typeName();
+  }
+})();
+
+/* ---------- HERO: parallax fade while scrolling away ---------- */
+(function () {
+  const hero = $('#home');
+  if (!hero || reduce) return;
+
+  let queued = false;
+  const update = () => {
+    queued = false;
+    const rect = hero.getBoundingClientRect();
+    const progress = clamp(-rect.top / Math.max(rect.height * 0.7, 1), 0, 1);
+
+    hero.style.setProperty('--hero-copy-y', (-24 * progress).toFixed(1) + 'px');
+    hero.style.setProperty('--hero-copy-opacity', (1 - progress * 0.35).toFixed(2));
+    hero.style.setProperty('--hero-word-y', (32 * progress).toFixed(1) + 'px');
+    hero.style.setProperty('--hero-word-opacity', (1 - progress).toFixed(2));
+  };
+  const queueUpdate = () => {
+    if (!queued) { queued = true; requestAnimationFrame(update); }
+  };
+  addEventListener('scroll', queueUpdate, { passive: true });
+  addEventListener('resize', queueUpdate);
+  update();
+})();
+
 /* ---------- 2. NAV: menu mobile + link aktif ---------- */
 (function () {
   const toggle = $('#navToggle'), links = $('#navLinks');
@@ -77,11 +155,11 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!badge || reduce) return;
   const hint = $('.drag-hint', badge);
 
-  const STIFFNESS = 38;   // makin besar = makin cepat balik
-  const DAMPING = 2.6;    // makin kecil = makin lama berayun
-  const MAX_ANGLE = 40;   // batas ayunan (derajat)
+  const STIFFNESS = 42;   // makin besar = makin cepat balik
+  const DAMPING = 1.6;    // makin kecil = makin lama berayun
+  const MAX_ANGLE = 55;   // batas ayunan (derajat)
 
-  let angle = 10, vel = 0, dragging = false, visible = true;
+  let angle = 18, vel = 24, dragging = false, visible = true;
   let pivotX = 0, pivotY = 0, last = performance.now();
 
   function setPivot() {
@@ -99,8 +177,8 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (hint) hint.classList.add('is-hidden');
   });
   badge.addEventListener('pointermove', (e) => {
-    if (dragging) { const next = pointToAngle(e); vel = (next - angle) * 30; angle = next; }
-    else if (e.pointerType === 'mouse') vel += e.movementX * 0.35;   // efek tertiup
+    if (dragging) { const next = pointToAngle(e); vel = (next - angle) * 42; angle = next; }
+    else if (e.pointerType === 'mouse') vel += e.movementX * 0.5;   // efek tertiup
   });
   const release = () => { dragging = false; badge.classList.remove('is-dragging'); };
   badge.addEventListener('pointerup', release);
@@ -235,11 +313,13 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduce) return;
   const OFFSET = 32, STEP = 0.1;
 
-  const fade = [   // ikut animasi muncul/hilang
-    '.section-head', '.marquee', '.am-left > *', '.proj-card', '.cert-card',
-    '.contact .wrap > div', '.contact-form', '.contact-info-item',
+  const fade = [
+    '.hero-copy > *',
+    '.section-head', '.marquee', '.am-left > *', '.tl-item',
+    '.xp-item', '.orgs-grid > *', '.proj-card', '.cert-card',
+    '.contact .wrap > div > :not(.contact-info-list)', '.contact-info-item',
+    '.contact-form', 'footer .wrap > *',
   ];
-  const stateOnly = ['.tl-item', '.xp-item'];   // hanya butuh class is-in (titik/cincin); teksnya diurus modul 10
 
   const io = new IntersectionObserver((entries) => {
     entries.forEach((en) => {
@@ -264,7 +344,6 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     io.observe(el);
   });
   fade.forEach((s) => watch(s, true));
-  stateOnly.forEach((s) => watch(s, false));
 })();
 
 /* ---------- 9. GARIS TIMELINE terisi mengikuti scroll (About + Experience) ---------- */

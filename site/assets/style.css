@@ -45,6 +45,33 @@ button{font-family:inherit}
 h1,h2,h3{font-family:var(--display);font-weight:400;letter-spacing:.2px;margin:0;color:var(--green-deep)}
 section{position:relative;padding:96px 0}   /* tanpa garis antar-section */
 
+.intro-screen{
+  position:fixed;inset:0;z-index:1000;display:grid;place-items:center;overflow:hidden;
+  color:#fff;background:var(--green-deep);
+  background-image:radial-gradient(circle at center,rgba(76,107,46,.22),transparent 62%);
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .45s ease,visibility .45s ease;
+}
+.intro-screen::before,.intro-screen::after{
+  content:"";position:absolute;width:min(58vw,620px);aspect-ratio:1;border:1px solid rgba(255,255,255,.08);border-radius:50%;
+}
+.intro-screen::before{transform:scale(.72)}
+.intro-screen::after{transform:scale(1.08)}
+.intro-enabled .intro-screen{opacity:1;visibility:visible;pointer-events:auto}
+.intro-finished .intro-screen{opacity:0;pointer-events:none}
+.intro-content{position:relative;z-index:1;width:min(360px,80vw);text-align:center;animation:introEnter .65s cubic-bezier(.2,.8,.2,1) both}
+.intro-eyebrow{margin:0 0 4px;font-size:13px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.7)}
+.intro-name{margin:0;font:clamp(58px,12vw,88px)/1 var(--display);letter-spacing:.02em}
+.intro-name span{color:var(--red)}
+.intro-caption{margin:12px 0 30px;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.72)}
+.intro-caption span{padding:0 5px;color:var(--yellow)}
+.intro-progress{height:3px;overflow:hidden;background:rgba(255,255,255,.18);border-radius:999px}
+.intro-progress i{display:block;width:100%;height:100%;background:var(--yellow);transform:scaleX(0);transform-origin:left;animation:introProgress 1.8s ease forwards}
+.intro-skip{position:absolute;right:24px;bottom:24px;padding:9px 15px;color:#fff;font:600 13px var(--body);background:transparent;border:1px solid rgba(255,255,255,.45);border-radius:999px;cursor:pointer}
+.intro-skip:hover{color:var(--green-deep);background:#fff}
+@keyframes introEnter{from{opacity:0;translate:0 18px}to{opacity:1;translate:0 0}}
+@keyframes introProgress{to{transform:scaleX(1)}}
+
 .section-head{max-width:640px;margin:0 0 44px}
 .section-head h2,.contact h2{font-size:clamp(34px,5vw,52px);line-height:1.02;text-transform:lowercase}
 .section-head p{margin:12px 0 0;max-width:52ch;color:var(--ink-soft)}
@@ -101,22 +128,20 @@ section{position:relative;padding:96px 0}   /* tanpa garis antar-section */
 .hero-bigword{
   position:absolute;top:18px;left:0;z-index:0;pointer-events:none;white-space:nowrap;line-height:1;
   font-family:var(--display);font-size:clamp(90px,16vw,220px);color:rgba(76,107,46,.08);
+  translate:0 var(--hero-word-y,0px);opacity:var(--hero-word-opacity,1);
 }
 .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:start}
-.hero-copy{position:relative;z-index:1;align-self:center;min-width:0;padding-top:48px}
+.hero-copy{position:relative;z-index:1;align-self:center;min-width:0;padding-top:48px;translate:0 var(--hero-copy-y,0px);opacity:var(--hero-copy-opacity,1)}
 .hero-term{display:none}
 .hero-copy .hi{margin:0 0 4px;font-weight:700;font-size:20px;color:var(--ink-soft)}
 .hero-copy h1{font-size:clamp(46px,7vw,76px);line-height:.98;text-transform:lowercase}
 .hero-copy h1 .name{display:block;color:var(--red)}
-
-@keyframes heroFade{from{opacity:0;translate:0 14px}to{opacity:1;translate:0 0}}
-.hero-copy>*{animation:heroFade .7s ease both}
-.hero-copy>:nth-child(1){animation-delay:.05s}
-.hero-copy>:nth-child(2){animation-delay:.12s}
-.hero-copy>:nth-child(3){animation-delay:.20s}
-.hero-copy>:nth-child(5){animation-delay:.28s}
-.hero-copy>:nth-child(6){animation-delay:.36s}
-.hero-copy>:nth-child(7){animation-delay:.44s}
+.typing-line{display:block;min-height:1em}
+.typing-line.is-typing::after{
+  content:"";display:inline-block;height:.86em;margin-left:.08em;vertical-align:-.06em;
+  border-right:2px solid currentColor;animation:typingCaret .75s step-end infinite;
+}
+@keyframes typingCaret{50%{opacity:0}}
 
 /* role chips: melayang pelan, JS menyorot bergantian */
 .role-row{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 16px}

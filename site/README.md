@@ -3,8 +3,8 @@
 A static one-page portfolio site built from your PPTX portfolio deck — same content,
 same brand tone (olive green + signal red on cream paper, bold display type, the
 ID-badge/lanyard motif from your cover slide), laid out like a modern portfolio
-site (sticky nav, hero, about, filterable skills, experience, projects grid,
-certifications, contact form).
+site (animated welcome intro, sticky nav, hero, about, filterable skills,
+experience, projects grid, certifications, contact form).
 
 No build step, no framework — plain HTML/CSS/JS. Works anywhere static files work.
 
