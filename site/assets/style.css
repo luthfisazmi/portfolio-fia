@@ -131,7 +131,7 @@ section{position:relative;padding:96px 0}   /* tanpa garis antar-section */
   translate:0 var(--hero-word-y,0px);opacity:var(--hero-word-opacity,1);
 }
 .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:start}
-.hero-copy{position:relative;z-index:1;align-self:center;min-width:0;padding-top:48px;translate:0 var(--hero-copy-y,0px);opacity:var(--hero-copy-opacity,1)}
+.hero-copy{position:relative;z-index:1;align-self:center;min-width:0;padding-top:48px;translate:0 var(--hero-copy-y,0px)}
 .hero-term{display:none}
 .hero-copy .hi{margin:0 0 4px;font-weight:700;font-size:20px;color:var(--ink-soft)}
 .hero-copy h1{font-size:clamp(46px,7vw,76px);line-height:.98;text-transform:lowercase}

@@ -79,7 +79,6 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const progress = clamp(-rect.top / Math.max(rect.height * 0.7, 1), 0, 1);
 
     hero.style.setProperty('--hero-copy-y', (-24 * progress).toFixed(1) + 'px');
-    hero.style.setProperty('--hero-copy-opacity', (1 - progress * 0.35).toFixed(2));
     hero.style.setProperty('--hero-word-y', (32 * progress).toFixed(1) + 'px');
     hero.style.setProperty('--hero-word-opacity', (1 - progress).toFixed(2));
   };
