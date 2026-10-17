@@ -465,7 +465,7 @@ footer a{font-weight:600;color:rgba(239,237,227,.85)}
   .nav .nav-links a{display:block;padding:12px 4px;font-size:16px}
   .nav-toggle{display:flex}
   .nav-cta .btn-primary{display:none}
-  .hero-visual{--hs:90px}
+  .hero-visual{--hs:90px;margin-bottom:88px}
   .badge{width:min(290px,84%)}
   .float-pill{display:none}
   .stat-row{gap:10px}
