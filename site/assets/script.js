@@ -94,6 +94,22 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ---------- 2. NAV: menu mobile + link aktif ---------- */
 (function () {
+  const themeToggle = $('#themeToggle');
+  if (themeToggle) {
+    const setTheme = (dark) => {
+      document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+      themeToggle.setAttribute('aria-pressed', String(dark));
+      const label = dark ? 'Switch to light mode' : 'Switch to dark mode';
+      themeToggle.setAttribute('aria-label', label);
+      themeToggle.title = label;
+      try { localStorage.setItem('portfolio-theme', dark ? 'dark' : 'light'); } catch (e) {}
+      const themeColor = $('meta[name="theme-color"]');
+      if (themeColor) themeColor.content = dark ? '#171a16' : '#223318';
+    };
+    setTheme(document.documentElement.dataset.theme === 'dark');
+    themeToggle.addEventListener('click', () => setTheme(document.documentElement.dataset.theme !== 'dark'));
+  }
+
   const toggle = $('#navToggle'), links = $('#navLinks');
   if (!toggle || !links) return;
 
