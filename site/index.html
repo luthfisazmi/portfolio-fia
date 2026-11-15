@@ -29,10 +29,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link rel="stylesheet" href="assets/style.css">
 <script>
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  // intro only once per browser session
+  var introSeen = false;
+  try { introSeen = sessionStorage.getItem('introSeen') === '1'; } catch (e) {}
+  if (!introSeen && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     document.documentElement.classList.add('intro-enabled');
   }
 </script>
@@ -172,46 +174,32 @@
     </div>
  
     <div class="am-right">
-      <div class="tl" id="tl">
-        <i class="tl-line"></i><i class="tl-fill"></i>
- 
-        <div class="tl-item">
-          <span class="tl-dot"></span>
-          <div class="tl-when">2022</div>
-          <div class="tl-title">Started Information Systems</div>
-          <p class="tl-desc">Began my degree at UPN "Veteran" Jawa Timur.</p>
-        </div>
-        <div class="tl-item">
-          <span class="tl-dot"></span>
-          <div class="tl-when">2023</div>
-          <div class="tl-title">Campus Organizations</div>
-          <p class="tl-desc">Event Staff for KKN-T Bela Negara SDGs &amp; SIPA 2023.</p>
-        </div>
-        <div class="tl-item">
-          <span class="tl-dot"></span>
-          <div class="tl-when">2024</div>
-          <div class="tl-title">Data Analyst MSIB Batch 7</div>
-          <p class="tl-desc">Analyzed 1,356 participants in the Exam.inate dashboard and earned the Best Presentation award.</p>
-        </div>
-        <div class="tl-item">
-          <span class="tl-dot"></span>
-          <div class="tl-when">2025</div>
-          <div class="tl-title">Back-End Developer</div>
-          <p class="tl-desc">Refactored SIMA from Laravel 5 to Laravel 12 and updated its legacy code at Diskominfo Jawa Timur.</p>
-        </div>
-        <div class="tl-item">
-          <span class="tl-dot"></span>
-          <div class="tl-when">2026</div>
-          <div class="tl-title">Graduated</div>
-          <p class="tl-desc">Finished with a 3.82 GPA.</p>
-        </div>
-        <div class="tl-item">
-          <span class="tl-dot"></span>
-          <div class="tl-when">Present <span class="tl-live"></span></div>
-          <div class="tl-title">Software Engineer</div>
-          <p class="tl-desc">Perumdam Tirta Kencana, where I'm building software today.</p>
-        </div>
-      </div>
+      <ul class="facts">
+        <li class="fact" style="--c:#3A6FD8">
+          <span class="fact-ic"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5zM6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5M22 9v6"/></svg></span>
+          <span class="fact-label">Education</span>
+          <b>UPN "Veteran" Jawa Timur</b>
+          <span class="fact-sub">Information Systems, 2022–2026 · GPA 3.82</span>
+        </li>
+        <li class="fact" style="--c:#3F8F5A">
+          <span class="fact-ic"><svg viewBox="0 0 24 24"><path d="M4 8h16v11H4zM9 8V5h6v3M4 13h16"/></svg></span>
+          <span class="fact-label">Now <i class="fact-live"></i></span>
+          <b>Software Engineer</b>
+          <span class="fact-sub">Perumdam Tirta Kencana Jombang</span>
+        </li>
+        <li class="fact" style="--c:var(--red)">
+          <span class="fact-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><path d="M12 12h.01"/></svg></span>
+          <span class="fact-label">Focus</span>
+          <b>Web Apps &amp; Data</b>
+          <span class="fact-sub">Laravel, MySQL, Tableau, Figma</span>
+        </li>
+        <li class="fact" style="--c:#7A4FD0">
+          <span class="fact-ic"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0114 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
+          <span class="fact-label">Based in</span>
+          <b>East Java, Indonesia</b>
+          <span class="fact-sub">Open to new opportunities</span>
+        </li>
+      </ul>
     </div>
  
   </div>
@@ -230,6 +218,8 @@
   <div class="mq-row" style="--t:44s"><div class="mq-track">
     <span class="sk" style="--c:#777BB4"><i>Ph</i><b>PHP<small>Language</small></b></span>
     <span class="sk" style="--c:#F05340"><i>Lv</i><b>Laravel<small>Framework</small></b></span>
+    <span class="sk" style="--c:#C9A400"><i>JS</i><b>JavaScript<small>Language</small></b></span>
+    <span class="sk" style="--c:#2E7D5B"><i>API</i><b>REST API<small>Back-end</small></b></span>
     <span class="sk" style="--c:#00758F"><i>My</i><b>MySQL<small>Database</small></b></span>
     <span class="sk" style="--c:#2461C7"><i>SQ</i><b>SQL<small>Query language</small></b></span>
     <span class="sk" style="--c:#512BD4"><i>VB</i><b>VB.NET<small>Desktop apps</small></b></span>
@@ -239,6 +229,7 @@
     <span class="sk" style="--c:#4B3FA0"><i>Pd</i><b>Pandas<small>Data analysis</small></b></span>
     <span class="sk" style="--c:#E97627"><i>Tb</i><b>Tableau<small>Dashboards</small></b></span>
     <span class="sk" style="--c:#6C8C3E"><i>PL</i><b>SmartPLS<small>Statistics</small></b></span>
+    <span class="sk" style="--c:#0F62FE"><i>SP</i><b>SPSS<small>Statistics</small></b></span>
     <span class="sk" style="--c:#1B5E9E"><i>CR</i><b>Crystal Reports<small>Reporting</small></b></span>
   </div></div>
   <div class="mq-row" style="--t:56s"><div class="mq-track">
@@ -264,11 +255,11 @@
  
       <article class="xp-item">
         <span class="xp-ring"></span>
-        <time class="xp-date">Present, 2026</time>
+        <time class="xp-date">September 2026 - Present</time>
         <h3>Software Engineer</h3>
         <div class="xp-co">Perusahaan Umum Daerah Air Minum Tirta Kencana</div>
-        <p class="xp-desc">Currently working as a Software Engineer.</p>
-        <div class="xp-tags"><span>Laravel</span><span>MySQL</span><span>Git</span><span>API Development</span></div>
+        <p class="xp-desc">Building and maintaining Laravel-based correspondence systems: e-Surat Tirta Kencana (10+ letter types, 7 user roles) and e-Jawara for Perpamsi Jawa Timur, plus debugging and improving backend REST APIs.</p>
+        <div class="xp-tags"><span>Laravel</span><span>MySQL</span><span>REST API</span><span>Git</span></div>
       </article>
  
       <article class="xp-item">
@@ -291,31 +282,35 @@
     </div>
  
     <div class="xp-orgs">
-  <h3>Organizations &amp; Committees</h3>
+  <h3>organizations &amp; committees</h3>
   <ul class="orgs-grid">
     <li class="org" style="--c:#D93A29">
       <span class="org-year">2025</span>
-      <span class="org-ic"><svg viewBox="0 0 24 24"><path d="M4 8h16M8 3v4M16 3v4M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg></span>
-      <b>Event Staff</b>
-      <span class="org-ev">KKN-T Bela Negara SDGs</span>
+      <div class="org-body">
+        <span class="org-role">Event Staff</span>
+        <b>KKN-T Bela Negara SDGs</b>
+      </div>
     </li>
     <li class="org" style="--c:#4C6B2E">
       <span class="org-year">2024</span>
-      <span class="org-ic"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6zM9 12l2 2 4-4"/></svg></span>
-      <b>Security &amp; Operations Staff</b>
-      <span class="org-ev">Information System Competition</span>
+      <div class="org-body">
+        <span class="org-role">Security &amp; Operations Staff</span>
+        <b>Information System Competition</b>
+      </div>
     </li>
     <li class="org" style="--c:#3A6FD8">
       <span class="org-year">2023</span>
-      <span class="org-ic"><svg viewBox="0 0 24 24"><path d="M4 8h16M8 3v4M16 3v4M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg></span>
-      <b>Event Staff</b>
-      <span class="org-ev">SIPA (Sistem Informasi Peduli Anak)</span>
+      <div class="org-body">
+        <span class="org-role">Event Staff</span>
+        <b>SIPA (Sistem Informasi Peduli Anak)</b>
+      </div>
     </li>
     <li class="org" style="--c:#7A4FD0">
       <span class="org-year">2023</span>
-      <span class="org-ic"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6zM9 12l2 2 4-4"/></svg></span>
-      <b>Security &amp; Operations Staff</b>
-      <span class="org-ev">DIMENSI</span>
+      <div class="org-body">
+        <span class="org-role">Security &amp; Operations Staff</span>
+        <b>DIMENSI</b>
+      </div>
     </li>
   </ul>
 </div>
@@ -334,7 +329,7 @@
     <div class="proj-grid">
       <div class="proj-card">
         <div class="proj-thumb">
-          <img src="assets/img/proj-perpamsi.png" alt="e-Jawara Perpamsi electronic correspondence web application">
+          <img src="assets/img/proj-perpamsi.jpg" loading="lazy" alt="e-Jawara Perpamsi electronic correspondence web application">
           <span class="proj-status"><i></i>On Going</span>
         </div>
         <div class="proj-body">
@@ -347,7 +342,7 @@
       </div>
       <div class="proj-card">
         <div class="proj-thumb">
-          <img src="assets/img/proj-esurat.jpg" alt="e-Surat Tirta Kencana correspondence system">
+          <img src="assets/img/proj-esurat.jpg" alt="e-Surat Tirta Kencana correspondence system" loading="lazy">
           <span class="proj-status"><i></i>On Going</span>
         </div>
         <div class="proj-body">
@@ -359,7 +354,7 @@
         </div>
       </div>
       <div class="proj-card">
-        <div class="proj-thumb"><img src="assets/img/proj-sima.png" alt="SIMA — Sistem Informasi Magang dashboard"></div>
+        <div class="proj-thumb"><img src="assets/img/proj-sima.jpg" loading="lazy" alt="SIMA — Sistem Informasi Magang dashboard"></div>
         <div class="proj-body">
           <h3>SIMA (Sistem Informasi Magang)</h3>
           <p class="proj-sub">Back-End Developer Project</p>
@@ -370,7 +365,7 @@
       </div>
 
       <div class="proj-card">
-        <div class="proj-thumb"><img src="assets/img/proj-apotik.jpg" alt="Apotik Sehat Sentra pharmacy POS system"></div>
+        <div class="proj-thumb"><img src="assets/img/proj-apotik.jpg" alt="Apotik Sehat Sentra pharmacy POS system" loading="lazy"></div>
         <div class="proj-body">
           <h3>Apotik Sehat Sentra</h3>
           <p class="proj-sub">BNSP Competency Assessment</p>
@@ -382,7 +377,7 @@
       </div>
 
       <div class="proj-card">
-        <div class="proj-thumb"><img src="assets/img/proj-kimdomi.jpg" alt="Kim DO-Mi desktop application"></div>
+        <div class="proj-thumb"><img src="assets/img/proj-kimdomi.jpg" alt="Kim DO-Mi desktop application" loading="lazy"></div>
         <div class="proj-body">
           <h3>Kim DO-Mi</h3>
           <p class="proj-sub">Desktop Programming Course</p>
@@ -393,7 +388,7 @@
       </div>
 
       <div class="proj-card">
-        <div class="proj-thumb"><img src="assets/img/proj-ourroom.jpg" alt="OURROOM furniture app UI/UX"></div>
+        <div class="proj-thumb"><img src="assets/img/proj-ourroom.jpg" alt="OURROOM furniture app UI/UX" loading="lazy"></div>
         <div class="proj-body">
           <h3>OURROOM</h3>
           <p class="proj-sub">UI/UX Case Study</p>
@@ -404,7 +399,7 @@
       </div>
 
       <div class="proj-card">
-        <div class="proj-thumb"><img src="assets/img/proj-jasmani.jpg" alt="JASMANI smart village app UI/UX"></div>
+        <div class="proj-thumb"><img src="assets/img/proj-jasmani.jpg" alt="JASMANI smart village app UI/UX" loading="lazy"></div>
         <div class="proj-body">
           <h3>JASMANI</h3>
           <p class="proj-sub">UI/UX Case Study</p>
@@ -415,7 +410,7 @@
       </div>
 
       <div class="proj-card">
-        <div class="proj-thumb"><img src="assets/img/proj-reziq.jpg" alt="REZIQ Laundry and Wetclean app UI/UX"></div>
+        <div class="proj-thumb"><img src="assets/img/proj-reziq.jpg" alt="REZIQ Laundry and Wetclean app UI/UX" loading="lazy"></div>
         <div class="proj-body">
           <h3>REZIQ Laundry &amp; WetClean</h3>
           <p class="proj-sub">UI/UX Case Study</p>
@@ -426,7 +421,7 @@
       </div>
 
       <div class="proj-card">
-        <div class="proj-thumb"><img src="assets/img/proj-examinate.jpg" alt="Exam.inate Tableau dashboard"></div>
+        <div class="proj-thumb"><img src="assets/img/proj-examinate.jpg" alt="Exam.inate Tableau dashboard" loading="lazy"></div>
         <div class="proj-body">
           <h3>Exam.inate</h3>
           <p class="proj-sub">Online Assessment Dashboard</p>
@@ -465,9 +460,8 @@
           <img src="assets/img/cert-data-analyst.jpg" alt="Data Analyst certificate" loading="lazy">
         </a>
         <div class="cert-body">
-          <h3>Data Analyst Certificate</h3>
-          <!-- sesuaikan penerbit/program jika berbeda -->
-          <p>Completion certificate for the Data Analyst program, MSIB Batch 7 at Karier.mu.</p>
+          <h3>Data Analytics Certificate</h3>
+          <p>Completion certificate for the Data Analytics program, MSIB Batch 7 at Karier.mu (PT Semesta Integrasi Digital).</p>
         </div>
       </div>
 
@@ -477,8 +471,7 @@
         </a>
         <div class="cert-body">
           <h3>English Proficiency Test</h3>
-          <!-- isi nama tes (TOEFL/EPrT/dll) dan skor, mis. "TOEFL ITP — score 5xx" -->
-          <p>Certificate of English language proficiency.</p>
+          <p>English Proficiency Test (EPT) by UPA Bahasa UPN "Veteran" Jawa Timur, 2025 — score 513.</p>
         </div>
       </div>
 
@@ -516,26 +509,26 @@
 
       <div class="contact-info-list">
   <div class="contact-info-item">
-    <div class="ic"><i class="fa-solid fa-envelope"></i></div>
+    <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18a1 1 0 011 1v12a1 1 0 01-1 1H3a1 1 0 01-1-1V6a1 1 0 011-1zm1 2.4V17h16V7.4l-8 5.3-8-5.3zM5.6 7l6.4 4.2L18.4 7H5.6z"/></svg></div>
     <a href="mailto:luthfiadiyah@gmail.com">luthfiadiyah@gmail.com</a>
   </div>
 
   <div class="contact-info-item">
-    <div class="ic"><i class="fa-brands fa-linkedin-in"></i></div>
+    <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 110 5 2.5 2.5 0 010-5zM3 9.75h4V21H3V9.75zm6.5 0h3.8v1.6h.06c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.77 2.65 4.77 6.1V21h-4v-4.98c0-1.19-.02-2.72-1.66-2.72-1.66 0-1.92 1.3-1.92 2.63V21h-4V9.75z"/></svg></div>
     <a href="https://linkedin.com/in/luthfisazmi" target="_blank" rel="noopener">
       linkedin.com/in/luthfisazmi
     </a>
   </div>
 
   <div class="contact-info-item">
-    <div class="ic"><i class="fa-brands fa-github"></i></div>
+    <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 00-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.58 9.58 0 015 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0012 2z"/></svg></div>
     <a href="https://github.com/luthfisazmi" target="_blank" rel="noopener">
       github.com/luthfisazmi
     </a>
   </div>
 
   <div class="contact-info-item">
-    <div class="ic"><i class="fa-solid fa-location-dot"></i></div>
+    <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 00-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 00-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z"/></svg></div>
     <span>Surabaya, Indonesia</span>
   </div>
 </div>

@@ -4,7 +4,7 @@
    tidak ada observer atau listener yang bekerja dua kali.
    1 Helper · 2 Nav · 3 Contact form · 4 Badge lanyard · 5 Role chips
    6 Stat cards · 7 Skills · 8 Scroll reveal (dua arah)
-   9 Garis timeline · 10 Teks memudar saat scroll · 11 Tilt kartu
+   9 Garis timeline · 11 Tilt kartu
    ========================================================== */
 
 /* ---------- 1. HELPER ---------- */
@@ -17,10 +17,12 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 (function () {
   const screen = $('#introScreen');
   if (!screen) return;
-  if (reduce) { screen.remove(); return; }
+  // the inline <head> script decides: skipped for reduced motion or if already seen this session
+  if (!document.documentElement.classList.contains('intro-enabled')) { screen.remove(); return; }
 
   const finish = () => {
     clearTimeout(timer);
+    try { sessionStorage.setItem('introSeen', '1'); } catch (e) {}
     document.documentElement.classList.remove('intro-enabled');
     document.documentElement.classList.add('intro-finished');
     screen.setAttribute('aria-hidden', 'true');
@@ -264,6 +266,7 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   // [slug Simple Icons, warna] atau ['local', 'path']. Tool yang tidak terdaftar tetap pakai monogram.
   const LOGOS = {
     'PHP': ['php', '777BB4'], 'Laravel': ['laravel', 'FF2D20'], 'MySQL': ['mysql', '4479A1'],
+    'JavaScript': ['javascript', 'F7DF1E'],
     'VB.NET': ['dotnet', '512BD4'], 'Python': ['python', '3776AB'], 'Pandas': ['pandas', '150458'],
     'Tableau': ['local', 'assets/img/logos/tableau.png'], 'Crystal Reports': ['sap', '0FAAFF'],
     'Figma': ['figma', 'F24E1E'], 'Maze': ['local', 'assets/img/logos/maze.png'],
@@ -314,7 +317,7 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const fade = [
     '.hero-copy > *',
-    '.section-head', '.marquee', '.am-left > *', '.tl-item',
+    '.section-head', '.marquee', '.am-left > *', '.fact',
     '.xp-item', '.orgs-grid > *', '.proj-card', '.cert-card',
     '.contact .wrap > div > :not(.contact-info-list)', '.contact-info-item',
     '.contact-form', 'footer .wrap > *',
@@ -345,40 +348,25 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   fade.forEach((s) => watch(s, true));
 })();
 
-/* ---------- 9. GARIS TIMELINE terisi mengikuti scroll (About + Experience) ---------- */
+/* ---------- 9. GARIS TIMELINE terisi mengikuti scroll (Experience) ---------- */
 (function () {
-  [$('#tl'), $('#xp')].filter(Boolean).forEach((el) => {
+  [$('#xp')].filter(Boolean).forEach((el) => {
+    const rings = $$('.xp-ring', el);
     const update = () => {
       const r = el.getBoundingClientRect();
       const p = reduce ? 1 : clamp((innerHeight * 0.65 - r.top) / r.height, 0, 1);
       el.style.setProperty('--p', p.toFixed(3));
+      // titik jadi merah begitu garis merah sudah sampai ke titik itu
+      const fillEnd = r.top + p * r.height;
+      rings.forEach((ring) => {
+        const rr = ring.getBoundingClientRect();
+        ring.classList.toggle('is-on', rr.top + rr.height / 2 <= fillEnd);
+      });
     };
     addEventListener('scroll', update, { passive: true });
     addEventListener('resize', update);
     update();
   });
-})();
-
-/* ---------- 10. TEKS MEMUDAR mengikuti posisi scroll (About + Experience) ---------- */
-(function () {
-  if (reduce) return;
-  const els = $$('.tl-when,.tl-title,.tl-desc,.xp-date,.xp-item h3,.xp-co,.xp-desc,.xp-tags,.xp-orgs h3,.xp-orgs li');
-  els.forEach((e) => e.classList.add('sc'));
-
-  let queued = false;
-  const run = () => {
-    queued = false;
-    const vh = innerHeight, zone = vh * 0.24;   // 24% tepi atas/bawah = zona memudar
-    els.forEach((e) => {
-      const r = e.getBoundingClientRect(), c = r.top + r.height / 2;
-      const t = clamp(Math.min(c, vh - c) / zone, 0, 1);
-      e.style.setProperty('--o', t.toFixed(2));
-      e.style.setProperty('--y', ((1 - t) * (c < vh / 2 ? -1 : 1) * 22).toFixed(1) + 'px');
-    });
-  };
-  addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
-  addEventListener('resize', run);
-  run();
 })();
 
 /* ---------- 11. TILT 3D kartu proyek + sertifikat ---------- */
